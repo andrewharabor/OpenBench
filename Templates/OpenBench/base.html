@@ -114,6 +114,7 @@
                     <li><a href="/login"><i class="fa-solid fa-right-to-bracket fa-fw"></i> Login</a></li>
                     <li><a href="/register"><i class="fa-solid fa-registered fa-fw"></i> Register</a></li>
                 {% endif %}
+                <li><a href="/manage"><i class="fa-solid fa-sliders fa-fw"></i> Manage</a></li>
             </ul>
 
             <hr>
@@ -158,8 +159,8 @@
 
             <ul>
                 <li class="header">Engines</li>
-                {% for engine, data in config.engines.items %}
-                    <li><a href="{{data.source}}">{{engine}}</a></li>
+                {% for engine in engines %}
+                    <li><a href="{{engine.source}}">{{engine.name}}</a></li>
                 {% endfor %}
             </ul>
 
