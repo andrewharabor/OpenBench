@@ -35,7 +35,6 @@ import requests
 
 from django.db import transaction
 
-import OpenBench.model_utils
 import OpenBench.spsa_utils
 import OpenBench.utils
 import OpenBench.views
@@ -56,19 +55,7 @@ def create_workload(request, workload_type):
 
     if request.method == 'GET':
 
-        engines = EngineConfig.objects.filter(enabled=True).order_by('name')
-
-        data = {
-            'networks' : list(Network.objects.all().values()),
-            'books'    : Book.objects.filter(enabled=True).order_by('name'),
-            'engines'  : engines,
-
-            # The presets, nps and source are all applied by create_workload.js
-            'engine_configs' : {
-                engine.name : OpenBench.model_utils.engine_config_to_dict(engine)
-                for engine in engines
-            },
-        }
+        data = { 'networks' : list(Network.objects.all().values()) }
 
         if workload_type == 'TEST':
             data['workload']        = workload_type

@@ -223,8 +223,8 @@ register.filter('removePrefix', removePrefix)
 register.filter('machine_name', machine_name)
 
 def book_download_link(workload):
-    if (book := OpenBench.models.Book.objects.filter(name=workload.book_name).first()):
-        return book.source
+    if workload.book_name in OpenBench.config.OPENBENCH_CONFIG['books']:
+        return OpenBench.config.OPENBENCH_CONFIG['books'][workload.book_name]['source']
 
 def network_download_link(workload, branch):
 

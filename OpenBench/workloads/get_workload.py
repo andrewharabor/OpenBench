@@ -31,7 +31,7 @@ import sys
 import OpenBench.utils
 
 from OpenBench.config import OPENBENCH_CONFIG
-from OpenBench.models import Book, EngineConfig, Result, Test
+from OpenBench.models import Result, Test
 from OpenBench.spsa_utils import spsa_workload_assignment_dict
 
 from django.db import transaction
@@ -227,19 +227,11 @@ def workload_to_dictionary(test, result, machine):
         'scale_nps'     : test.scale_nps,
     }
 
-    # Book could have been deleted after this workload was created
-    book = Book.objects.filter(name=test.book_name).first()
-
     workload['test']['book'] = {
         'name'   : test.book_name,
-        'sha'    : book.sha    if book else None,
-        'source' : book.source if book else None,
+        'sha'    : OPENBENCH_CONFIG['books'].get(test.book_name, { 'sha'    : None })['sha'   ],
+        'source' : OPENBENCH_CONFIG['books'].get(test.book_name, { 'source' : None })['source'],
     }
-
-    # Looked up by name without regard for the enabled flag, so that disabling
-    # an Engine does not strand the Workloads already running against it
-    dev_config  = EngineConfig.objects.get(name=test.dev_engine)
-    base_config = EngineConfig.objects.get(name=test.base_engine)
 
     workload['test']['dev'] = {
         'id'           : test.dev.id,
@@ -252,8 +244,8 @@ def workload_to_dictionary(test, result, machine):
         'network'      : test.dev_network,
         'netname'      : test.dev_netname,
         'time_control' : test.dev_time_control,
-        'build'        : dev_config.build(),
-        'private'      : dev_config.private,
+        'build'        : OPENBENCH_CONFIG['engines'][test.dev_engine]['build'],
+        'private'      : OPENBENCH_CONFIG['engines'][test.dev_engine]['private'],
     }
 
     workload['test']['base'] = {
@@ -267,8 +259,8 @@ def workload_to_dictionary(test, result, machine):
         'network'      : test.base_network,
         'netname'      : test.base_netname,
         'time_control' : test.base_time_control,
-        'build'        : base_config.build(),
-        'private'      : base_config.private,
+        'build'        : OPENBENCH_CONFIG['engines'][test.base_engine]['build'],
+        'private'      : OPENBENCH_CONFIG['engines'][test.base_engine]['private'],
     }
 
     workload['distribution']   = game_distribution(test, machine)

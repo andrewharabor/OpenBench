@@ -5,7 +5,6 @@
 {% block scripts %}
 
     {{ config|json_script:"json-config" }}
-    {{ engine_configs|json_script:"json-engines" }}
     {{ networks|json_script:"json-networks" }}
     {{ profile.repos|json_script:"json-repos" }}
 
@@ -36,8 +35,8 @@
                 <div class="row">
                     <label for="dev_engine"> {{dev_text}} Engine </label>
                     <select id="dev_engine" name="dev_engine" onchange="change_engine(value, 'dev', '{{workload}}');">
-                        {% for engine in engines %}
-                            <option value="{{ engine.name }}">{{ engine.name }}</option>
+                        {% for engine in config.engines %}
+                            <option value="{{ engine }}">{{ engine }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -50,8 +49,8 @@
                     <div class="row">
                         <label for="base_engine"> Base Engine </label>
                         <select id="base_engine" name="base_engine" onchange="change_engine(value, 'base', '{{workload}}');">
-                            {% for engine in engines %}
-                                <option value="{{ engine.name }}">{{ engine.name }}</option>
+                            {% for engine in config.engines %}
+                                <option value="{{ engine }}">{{ engine }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -214,8 +213,8 @@
                 <div class="row">
                     <label for="book_name"> Opening Book </label> <select id="book_name" name="book_name">
                     <option selected value="NONE"> None </option>
-                    {% for book in books %}
-                        <option value="{{ book.name }}">{{ book.name }}</option>
+                    {% for name, data in config.books.items %}
+                        <option value="{{ name }}">{{ name }}</option>
                     {% endfor %}
                     </select>
                 </div>
