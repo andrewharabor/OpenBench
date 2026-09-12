@@ -1,6 +1,6 @@
 {
   "private": false,
-  "nps": 1200000,
+  "nps": 600000,
   "source": "https://github.com/andrewharabor/Sift",
   "build": {
     "path": "",
@@ -63,9 +63,20 @@
   },
   "tune_presets": {
     "default": {
+      "both_branch": "main",
       "book_name": "UHO_Lichess_4852_v1.epd",
-      "win_adj": "movecount=3 score=400",
-      "draw_adj": "movenumber=40 movecount=8 score=10"
+      "win_adj": "None",
+      "draw_adj": "None",
+      "spsa_pairs_per": 2,
+      "spsa_iterations": 2500
+    },
+    "STC": {
+      "both_options": "Threads=1 Hash=16",
+      "both_time_control": "8.0+0.08"
+    },
+    "LTC": {
+      "both_options": "Threads=1 Hash=128",
+      "both_time_control": "40.0+0.4"
     }
   }
 }

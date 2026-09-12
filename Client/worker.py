@@ -517,7 +517,7 @@ class MatchRunner:
     @staticmethod
     def pgnout_settings(config, timestamp, runner_idx):
         match_line = '^info string pgncomment .*'
-        return '-pgnout file=%s seldepth=true nodes=true match_line=%s' % (
+        return '-pgnout file=%s seldepth=true nodes=true nps=true match_line=%s' % (
             MatchRunner.pgn_name(config, timestamp, runner_idx), shlex.quote(match_line))
 
     @staticmethod
