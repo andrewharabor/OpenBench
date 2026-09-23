@@ -1,12 +1,11 @@
 {
   "private": false,
-  "nps": 700000,
+  "nps": 1200000,
   "source": "https://github.com/andrewharabor/Sift",
   "build": {
     "path": "",
     "compilers": [
-      "clang++",
-      "g++"
+      "clang++"
     ],
     "cpuflags": [],
     "systems": [
