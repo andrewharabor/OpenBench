@@ -1,6 +1,6 @@
 {
   "private": false,
-  "nps": 1200000,
+  "nps": 1150000,
   "source": "https://github.com/andrewharabor/Sift",
   "build": {
     "path": "",
